@@ -14,6 +14,7 @@ struct tree {
 
 /*
 func : a binary search tree;
+reference : https://blog.csdn.net/hongkangwl/article/details/21697641
 */
 class Btree {
     static int n;
