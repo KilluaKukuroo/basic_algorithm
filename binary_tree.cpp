@@ -8,6 +8,7 @@ using namespace std;
 struct tree {
     int val;
     tree *left, *right;
+    
     //tree(int x) 
 };
 
@@ -41,6 +42,10 @@ public:
     int treeHeight2(tree *p); //DFS 2
     int treeHeight3(tree *p); //BFS
     int calWayToLeaf(tree *p); //calculate how many ways could reach the leafs
+
+
+    void destroyBTree(tree *p);
+    void insertNode(tree *p, tree *node);
 
 };
 //class static variable is not bound to any object but bount to the class;
@@ -275,6 +280,28 @@ int Btree::calWayToLeaf(tree * p) {
 }
 
 /*
+func: destroy a binary tree
+*/
+void Btree::destroyBTree(tree *p) {
+    if(p == NULL) return;
+    else {
+        if(p->left == NULL && p->right == NULL) {
+            delete(p);
+            return;
+        } else if(p->left == NULL && p->right != NULL) {
+            destroyBTree(p->right);
+        } else if(p->left != NULL && p->right == NULL) {
+            destroyBTree(p->left);
+        } else{
+            destroyBTree(p->left);
+            destroyBTree(p->right);
+        }
+    }
+}
+
+
+
+/*
 problems: create Btree with different order of a same array of integers, the tree is the same?
 */
 
@@ -308,6 +335,19 @@ int main() {
     cout << "the height3 of the binary tree is = " << Apple.treeHeight3(Apple.root) << endl;
 
     cout << "the number of ways to leaf :  " << Apple.calWayToLeaf(Apple.root) << endl;
+
+
+    cout << "=====================================" << endl;
+    cout << "the size of tree is = " << sizeof(Apple) << "sizeof Apple.root = " << sizeof(Apple.root) << endl;
+    //delete(Apple.root);
+    //cout << "sizeof a null tree node = " << sizeof(tree()) << " after free Apple.root = " << sizeof(Apple.root) << endl;
+
+    Apple.destroyBTree(Apple.root);
+    cout << "the size of tree is = " << sizeof(Apple) << "sizeof Apple.root = " << sizeof(Apple.root) << endl;
+    cout << "the height of the binary tree is = " << Apple.treeHeight(Apple.root) << endl;
+    cout << "the height2 of the binary tree is = " << Apple.treeHeight2(Apple.root) << endl;
+    cout << "the height3 of the binary tree is = " << Apple.treeHeight3(Apple.root) << endl;
+
 
     return 0;
 }
